@@ -1,6 +1,8 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Railway Preview Deploy Action'
+description:
+  'Railway preview deployment GitHub Actions workflow for every pull request
+  opened in your repository like a Vercel'
+author: 'Wahyu Kurniawwan <wahyu@tranity.id>'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
@@ -9,15 +11,56 @@ branding:
 
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  railway_api_token:
+    description: 'The Railway API token'
     required: true
-    default: '1000'
+  project_id:
+    description:
+      'The Railway project ID, you can find it in the Railway dashboard >
+      Settings > General page'
+    required: true
+  environment_name:
+    description: 'The environment name to be base of the preview deployment'
+    required: true
+  environment_id:
+    description:
+      "The environment ID to be base of the preview deployment. If it's
+      provided, the `environment_name` will be ignored"
+    required: false
+  preview_environment_name:
+    description:
+      'The new environment name to be created for the preview deployment. E.g.
+      `pr-<PR_NUMBER>-<SHORT_COMMIT_HASH>`'
+    required: true
+  environment_variables:
+    description:
+      'The environment variables to be set in the preview deployment. Should be
+      a JSON object of key value paris. E.g. {"DATABASE_URL": "test_url", "A":
+      "abc", "D": "efg"}'
+    required: false
+  api_service_name:
+    description:
+      'The name of the API service to use for the PR environment. This is used
+      to identify the domain of the deployed PR environment'
+    required: false
+  ignore_service_redeploy:
+    description:
+      "List of service name to ignore when redeploying the PR environment. This
+      is useful for services that don't need to be redeployed on every PR"
+    required: false
+  branch_name:
+    description:
+      'The branch name of the PR to be used for the preview deployment'
+    required: true
+  reuse_preview_environment:
+    description:
+      "Whether to reuse the existing preview environment if it's already created"
+    required: false
 
 # Define your outputs here.
 outputs:
-  time:
-    description: 'Your output description here'
+  service_domain:
+    description: 'The domain of the service that was deployed'
 
 runs:
   using: node20
