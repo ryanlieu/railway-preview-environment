@@ -59,7 +59,7 @@ jobs:
         with:
           railway_api_token: ${{ secrets.RAILWAY_API_TOKEN }}
           project_id: ${{ secrets.RAILWAY_PROJECT_ID }}
-          environment_name: 'production'
+          environment_name: production
           preview_environment_name:
             preview-pr-${{ github.event.pull_request.number }}
           branch_name: ${{ github.head_ref }}
