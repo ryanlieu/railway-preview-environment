@@ -103,6 +103,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -135,6 +139,57 @@ jobs:
       - name: Post deployment info
         run:
           echo "Preview deployed at ${{ steps.deploy.outputs.service_domain }}"
+
+      - name: Post or update deployment comment
+        if: ${{ steps.test-action.outputs.service_domain != '' }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: commits } = await github.rest.pulls.listCommits({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              per_page: 1
+            });
+            const latestCommit = commits[commits.length - 1];
+            const latestCommitAuthor = latestCommit.commit.author.name;
+            const latestCommitTime = new Date(latestCommit.commit.author.date).toLocaleString();
+
+            const { data: comments } = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+
+            const body = `
+              🚀 **Deployment success!**
+
+              - \`web\` deployed at [${{ steps.test-action.outputs.service_domain }}](${{ steps.test-action.outputs.service_domain }})
+
+              ---
+
+              *commit: ${latestCommit.sha}*  
+              *author: ${latestCommitAuthor}*  
+              *time: ${latestCommitTime}*
+            `;
+
+            const comment = comments.find(comment => comment.body.includes('🚀 Deployment success!'));
+
+            if (comment) {
+              await github.rest.issues.updateComment({
+                comment_id: comment.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body
+              });
+            }
 
   cleanup:
     runs-on: ubuntu-latest
