@@ -110,4 +110,5 @@ jobs:
           railway_api_token: ${{ secrets.RAILWAY_API_TOKEN }}
           project_id: ${{ secrets.RAILWAY_PROJECT_ID }}
           preview_environment_name: 'pr-${{ github.event.pull_request.number }}'
+          branch_name: ${{ github.head_ref }}
           cleanup: 'true'

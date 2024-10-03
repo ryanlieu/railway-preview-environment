@@ -7,10 +7,6 @@ Railway project whenever a pull request is opened in your repository. It works
 similarly to Vercel preview deployments. This allows you to easily review
 changes in a live environment before merging.
 
-This PR is inspired by
-[railway-pr-deploy](https://github.com/Faolain/railway-pr-deploy) but with some
-improvements and convert it to TypeScript.
-
 ## Features
 
 - Deploys a new preview environment on every pull request.
@@ -202,6 +198,7 @@ jobs:
           railway_api_token: ${{ secrets.RAILWAY_API_TOKEN }}
           project_id: ${{ secrets.RAILWAY_PROJECT_ID }}
           preview_environment_name: 'pr-${{ github.event.pull_request.number }}'
+          branch_name: ${{ github.head_ref }}
           cleanup: 'true'
 ```
 
@@ -212,3 +209,11 @@ This action is licensed under the MIT License.
 This README provides a clear description of the action, how to use it, and
 example workflow configurations to help users quickly set up and start using
 your GitHub Action.
+
+---
+
+<p style="font-size: 12px; color: #b3b3b3; font-style: italic;">
+This PR is inspired by
+<a href="https://github.com/Faolain/railway-pr-deploy" target="__blank">railway-pr-deploy</a> but with some
+improvements and convert it to TypeScript.
+</p>
