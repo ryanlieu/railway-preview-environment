@@ -17,7 +17,7 @@ const API_SERVICE_NAME = core.getInput('api_service_name')
 const IGNORE_SERVICE_REDEPLOY = core.getInput('ignore_service_redeploy')
 const BRANCH_NAME = core.getInput('branch_name')
 const REUSE_PREVIEW_ENVIRONMENT =
-  core.getInput('reuse_preview_environment') ?? 'true'
+  core.getInput('reuse_preview_environment') || 'true'
 
 /**
  * The main function for the action.
@@ -37,7 +37,15 @@ export async function run(): Promise<void> {
 
     // if the environment exists, delete it
     if (selectedEnvironments.length >= 1) {
-      if (REUSE_PREVIEW_ENVIRONMENT) {
+      const environmentId = selectedEnvironments[0].node.id
+      core.info(
+        `Environment found: ${PREVIEW_ENVIRONMENT_NAME} (id: ${selectedEnvironments[0].node.id})`
+      )
+
+      if (REUSE_PREVIEW_ENVIRONMENT === 'true') {
+        core.info(
+          `Reusing environment: ${PREVIEW_ENVIRONMENT_NAME} (id: ${selectedEnvironments[0].node.id})`
+        )
         const { serviceInstances } = selectedEnvironments[0].node
 
         await setServiceDomainOutput({
@@ -47,10 +55,6 @@ export async function run(): Promise<void> {
         })
         return
       } else {
-        const environmentId = selectedEnvironments[0].node.id
-        core.info(
-          `Environment found: ${PROJECT_ENVIRONMENT_NAME} (id: ${selectedEnvironments[0].node.id})`
-        )
         core.info(
           `Deleting environment: ${PROJECT_ENVIRONMENT_NAME} (id: ${environmentId})`
         )
