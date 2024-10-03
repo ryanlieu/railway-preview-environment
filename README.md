@@ -154,7 +154,7 @@ jobs:
               ${marker}  <!-- This marker helps identify the comment for future updates -->
               🚀 **Deployment success!**
 
-              - \`web\` deployed at [${{ steps.test-action.outputs.service_domain }}](${{ steps.test-action.outputs.service_domain }})
+              - \`web\` deployed at [${{ steps.test-action.outputs.service_domain }}](https://${{ steps.test-action.outputs.service_domain }})
 
               ---
 
@@ -197,6 +197,7 @@ jobs:
         with:
           railway_api_token: ${{ secrets.RAILWAY_API_TOKEN }}
           project_id: ${{ secrets.RAILWAY_PROJECT_ID }}
+          environment_name: production
           preview_environment_name: 'pr-${{ github.event.pull_request.number }}'
           branch_name: ${{ github.head_ref }}
           cleanup: 'true'
@@ -206,7 +207,7 @@ jobs:
 
 This action is licensed under the MIT License.
 
-This README provides a clear description of the action, how to use it, and
+This readme provides a clear description of the action, how to use it, and
 example workflow configurations to help users quickly set up and start using
 your GitHub Action.
 
