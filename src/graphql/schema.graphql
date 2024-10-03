@@ -1,0 +1,152 @@
+type Query {
+  environments(projectId: String!): QueryEnvironmentConnection!
+  service(id: String!): Service!
+}
+
+type Mutation {
+  environmentDelete(id: String!): Boolean!
+  environmentCreate(input: EnvironmentCreateInput!): Environment!
+  variableCollectionUpsert(input: VariableCollectionUpsertInput): Boolean!
+  deploymentTriggerUpdate(
+    id: String!
+    input: DeploymentTriggerUpdateInput!
+  ): DeploymentTrigger!
+  serviceInstanceRedeploy(environmentId: String!, serviceId: String!): Boolean!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+input EnvironmentCreateInput {
+  ephemeral: Boolean
+  name: String!
+  projectId: String!
+  skipInitialDeploys: Boolean
+  sourceEnvironmentId: String
+  stageInitialChanges: Boolean
+}
+
+input VariableCollectionUpsertInput {
+  environmentId: String!
+  projectId: String!
+  replace: Boolean = false
+  serviceId: String
+  variables: EnvironmentVariables!
+}
+
+input DeploymentTriggerUpdateInput {
+  branch: String
+  checkSuites: Boolean
+  repository: String
+  rootDirectory: String
+}
+
+type QueryEnvironmentConnection {
+  edges: [QueryEnvironmentConnectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type QueryEnvironmentConnectionEdge {
+  cursor: String!
+  node: Environment!
+}
+
+type Environment {
+  id: ID!
+  name: String!
+  createdAt: String!
+  deployments: EnvironmentDeploymentsConnection!
+  serviceInstances: EnvironmentServiceInstancesConnection!
+  deploymentTriggers: EnvironmentDeploymentTriggersConnection!
+}
+
+type EnvironmentDeploymentTriggersConnection {
+  edges: [EnvironmentDeploymentTriggersConnectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type EnvironmentDeploymentTriggersConnectionEdge {
+  cursor: String!
+  node: DeploymentTrigger!
+}
+
+type DeploymentTrigger {
+  baseEnvironmentOverrideId: String
+  branch: String!
+  checkSuites: Boolean!
+  environmentId: String!
+  id: ID!
+  projectId: String!
+  provider: String!
+  repository: String!
+  serviceId: String
+  validCheckSuites: Int!
+}
+
+type EnvironmentDeploymentsConnection {
+  edges: [EnvironmentDeploymentsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type EnvironmentDeploymentsEdge {
+  cursor: String!
+  node: Deployment!
+}
+
+type Deployment {
+  id: ID!
+  status: String!
+}
+
+type EnvironmentServiceInstancesConnection {
+  edges: [EnvironmentServiceInstancesConnectionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type EnvironmentServiceInstancesConnectionEdge {
+  cursor: String!
+  node: ServiceInstance!
+}
+
+type ServiceInstance {
+  id: ID!
+  serviceId: String!
+  domains: AllDomains!
+  startCommand: String!
+}
+
+type AllDomains {
+  customDomains: [CustomDomain!]!
+  serviceDomains: [ServiceDomain!]!
+}
+
+type CustomDomain {
+  domain: String!
+  environmentId: String!
+  id: ID!
+  projectId: String
+  serviceId: String!
+  targetPort: Int
+}
+
+type ServiceDomain {
+  id: ID!
+  domain: String!
+  environmentId: String!
+  projectId: String
+  serviceId: String!
+  suffix: String
+  targetPort: Int
+}
+
+type Service {
+  id: ID!
+  name: String!
+  projectId: String!
+}
+
+scalar EnvironmentVariables

@@ -1,0 +1,5 @@
+query GetService($id: String!) {
+  service(id: $id) {
+    name
+  }
+}

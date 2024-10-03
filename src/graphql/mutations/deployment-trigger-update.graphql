@@ -1,0 +1,8 @@
+mutation DeploymentTriggerUpdate(
+  $id: String!
+  $input: DeploymentTriggerUpdateInput!
+) {
+  deploymentTriggerUpdate(id: $id, input: $input) {
+    id
+  }
+}
