@@ -137,11 +137,12 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.issue.number,
-              per_page: 1
+              per_page: 100 
             });
             const latestCommit = commits[commits.length - 1];
+            const latestCommitSha = latestCommit.sha.substring(0, 7);
             const latestCommitAuthor = latestCommit.commit.author.name;
-            const latestCommitTime = new Date(latestCommit.commit.author.date).toLocaleString();
+
 
             const { data: comments } = await github.rest.issues.listComments({
               issue_number: context.issue.number,
@@ -157,9 +158,8 @@ jobs:
 
               ---
 
-              *commit: ${latestCommit.sha}*  
-              *author: ${latestCommitAuthor}*  
-              *time: ${latestCommitTime}*
+              *commit: ${latestCommitSha}*  
+              *author: ${latestCommitAuthor}* 
             `;
 
             const existingComment = comments.find(comment => comment.body.includes(marker));
