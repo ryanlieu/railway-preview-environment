@@ -94,7 +94,7 @@ name: Railway Preview Deployment
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, closed]
 
 permissions:
   contents: read
@@ -108,6 +108,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.action != 'closed' }}
 
     steps:
       - name: Checkout repository
@@ -188,8 +189,8 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     if:
-      github.event.pull_request.merged == true ||
-      github.event.pull_request.state == 'closed'
+      ${{ github.event.pull_request.merged == true || github.event.action ==
+      'closed' }}
 
     steps:
       - name: Checkout repository
