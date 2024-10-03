@@ -57,6 +57,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get short commit hash
+        id: get_short_sha
+        run:
+          echo "short_sha=$(git rev-parse --short $GITHUB_SHA)" >>
+          $GITHUB_OUTPUT
+
       - name: Railway Preview Deploy
         uses: ayungavis/railway-preview-deploy@v1
         with:
@@ -64,7 +70,8 @@ jobs:
           project_id: ${{ secrets.RAILWAY_PROJECT_ID }}
           environment_name: 'staging'
           preview_environment_name:
-            'pr-${{ github.event.number }}-${{ github.sha }}'
+            'pr-${{ github.event.number }}-${{
+            steps.get_short_sha.outputs.short_sha }}'
           environment_variables:
             '{"DATABASE_URL": "postgres://user:pass@host/db"}'
           branch_name: ${{ github.head_ref }}
@@ -104,6 +111,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get short commit hash
+        id: get_short_sha
+        run:
+          echo "short_sha=$(git rev-parse --short $GITHUB_SHA)" >>
+          $GITHUB_OUTPUT
+
       - name: Deploy to Railway
         uses: ayungavis/railway-preview-deploy@v1
         with:
@@ -111,7 +124,8 @@ jobs:
           project_id: ${{ secrets.RAILWAY_PROJECT_ID }}
           environment_name: 'staging'
           preview_environment_name:
-            'pr-${{ github.event.number }}-${{ github.sha }}'
+            'pr-${{ github.event.number }}-${{
+            steps.get_short_sha.outputs.short_sha }}'
           environment_variables: |
             {
               "DATABASE_URL": "postgres://username:password@hostname/db"
@@ -132,13 +146,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Get short commit hash
+        id: get_short_sha
+        run:
+          echo "short_sha=$(git rev-parse --short $GITHUB_SHA)" >>
+          $GITHUB_OUTPUT
+
       - name: Cleanup Railway Environment
         uses: ayungavis/railway-preview-deploy@v1
         with:
           railway_api_token: ${{ secrets.RAILWAY_API_TOKEN }}
           project_id: ${{ secrets.RAILWAY_PROJECT_ID }}
           preview_environment_name:
-            'pr-${{ github.event.number }}-${{ github.sha }}'
+            'pr-${{ github.event.number }}-${{
+            steps.get_short_sha.outputs.short_sha }}'
           cleanup: 'true'
 ```
 
