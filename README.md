@@ -1,5 +1,7 @@
 # Railway Preview Deploy Action
 
+![preview-deploy-example](assets/preview-deployment-example.png)
+
 This GitHub Action automates the deployment of a preview environment for your
 Railway project whenever a pull request is opened in your repository. It works
 similarly to Vercel preview deployments. This allows you to easily review
