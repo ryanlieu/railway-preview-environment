@@ -44,6 +44,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const marker = '<!-- preview-comment -->'; // Unique marker to identify the comment
             const { data: commits } = await github.rest.pulls.listCommits({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -61,6 +62,7 @@ jobs:
             });
 
             const body = `
+              ${marker}  <!-- This marker helps identify the comment for future updates -->
               🚀 **Deployment success!**
 
               - \`web\` deployed at [${{ steps.test-action.outputs.service_domain }}](${{ steps.test-action.outputs.service_domain }})
@@ -72,15 +74,16 @@ jobs:
               *time: ${latestCommitTime}*
             `;
 
-            const comment = comments.find(comment => comment.body.includes('🚀 Deployment success!'));
+            const existingComment = comments.find(comment => comment.body.includes(marker));
 
-            if (comment) {
+            if (existingComment) {
               await github.rest.issues.updateComment({
-                comment_id: comment.id,
+                comment_id: existingComment.id,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 body: body
               });
+              core.info(`Updated comment ID: ${existingComment.id}`);
             } else {
               await github.rest.issues.createComment({
                 issue_number: context.issue.number,
@@ -88,6 +91,7 @@ jobs:
                 repo: context.repo.repo,
                 body: body
               });
+              core.info('Created a new comment');
             }
 
   cleanup:
