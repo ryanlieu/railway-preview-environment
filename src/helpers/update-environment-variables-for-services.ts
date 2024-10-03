@@ -15,7 +15,9 @@ export const updateEnvironmentVariablesForServices = async ({
   serviceInstances,
   environmentVariables
 }: UpdateEnvironmentVariablesForServices): Promise<void> => {
-  const parsedVariables = JSON.parse(environmentVariables)
+  const parsedVariables = environmentVariables
+    ? JSON.parse(environmentVariables)
+    : {}
   const serviceIds = []
 
   for (const serviceInstance of serviceInstances.edges) {

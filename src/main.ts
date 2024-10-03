@@ -81,12 +81,14 @@ export async function run(): Promise<void> {
     console.log('Created environment:')
     console.dir(createdEnvironment.environmentCreate, { depth: null })
 
-    const { id: environmentId, serviceInstances } =
-      createdEnvironment.environmentCreate
+    const {
+      id: environmentId,
+      serviceInstances,
+      deploymentTriggers
+    } = createdEnvironment.environmentCreate
 
     const deploymentTriggerIds = []
-    for (const deploymentTrigger of createdEnvironment.environmentCreate
-      .deploymentTriggers.edges) {
+    for (const deploymentTrigger of deploymentTriggers.edges) {
       const { id: deploymentTriggerId } = deploymentTrigger.node
       deploymentTriggerIds.push(deploymentTriggerId)
     }

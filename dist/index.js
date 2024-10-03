@@ -53644,7 +53644,9 @@ exports.updateEnvironmentVariablesForServices = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const variable_collection_upsert_1 = __nccwpck_require__(2047);
 const updateEnvironmentVariablesForServices = async ({ environmentId, projectId, serviceInstances, environmentVariables }) => {
-    const parsedVariables = JSON.parse(environmentVariables);
+    const parsedVariables = environmentVariables
+        ? JSON.parse(environmentVariables)
+        : {};
     const serviceIds = [];
     for (const serviceInstance of serviceInstances.edges) {
         const { serviceId } = serviceInstance.node;
@@ -53765,10 +53767,9 @@ async function run() {
         });
         console.log('Created environment:');
         console.dir(createdEnvironment.environmentCreate, { depth: null });
-        const { id: environmentId, serviceInstances } = createdEnvironment.environmentCreate;
+        const { id: environmentId, serviceInstances, deploymentTriggers } = createdEnvironment.environmentCreate;
         const deploymentTriggerIds = [];
-        for (const deploymentTrigger of createdEnvironment.environmentCreate
-            .deploymentTriggers.edges) {
+        for (const deploymentTrigger of deploymentTriggers.edges) {
             const { id: deploymentTriggerId } = deploymentTrigger.node;
             deploymentTriggerIds.push(deploymentTriggerId);
         }
