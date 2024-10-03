@@ -25,7 +25,7 @@ const REUSE_PREVIEW_ENVIRONMENT =
  */
 export async function run(): Promise<void> {
   try {
-    const ignoredServices = JSON.parse(IGNORE_SERVICE_REDEPLOY)
+    const ignoredServices = JSON.parse(IGNORE_SERVICE_REDEPLOY ?? '{}')
     const { environments } = await getEnvironments({ projectId: PROJECT_ID })
 
     const selectedEnvironments = environments.edges.filter(
