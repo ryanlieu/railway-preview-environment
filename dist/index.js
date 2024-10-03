@@ -53729,7 +53729,7 @@ async function run() {
             ? JSON.parse(IGNORE_SERVICE_REDEPLOY)
             : [];
         const { environments } = await (0, get_environments_1.getEnvironments)({ projectId: PROJECT_ID });
-        const selectedEnvironments = environments.edges.filter(edge => edge.node.name === PROJECT_ENVIRONMENT_NAME);
+        const selectedEnvironments = environments.edges.filter(edge => edge.node.name === PREVIEW_ENVIRONMENT_NAME);
         // if the environment exists, delete it
         if (selectedEnvironments.length >= 1) {
             if (REUSE_PREVIEW_ENVIRONMENT) {

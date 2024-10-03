@@ -32,7 +32,7 @@ export async function run(): Promise<void> {
     const { environments } = await getEnvironments({ projectId: PROJECT_ID })
 
     const selectedEnvironments = environments.edges.filter(
-      edge => edge.node.name === PROJECT_ENVIRONMENT_NAME
+      edge => edge.node.name === PREVIEW_ENVIRONMENT_NAME
     )
 
     // if the environment exists, delete it
