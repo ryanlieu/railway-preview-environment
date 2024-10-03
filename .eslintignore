@@ -1,3 +1,4 @@
+# Build and depencencies
 lib/
 dist/
 node_modules/
@@ -5,3 +6,6 @@ coverage/
 
 # GraphQL
 src/graphql/types.ts
+
+# Example
+example/

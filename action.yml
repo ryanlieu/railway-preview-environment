@@ -6,8 +6,8 @@ author: 'Wahyu Kurniawwan <wahyu@tranity.id>'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'heart'
-  color: 'red'
+  icon: 'activity'
+  color: 'purple'
 
 # Define your inputs here.
 inputs:

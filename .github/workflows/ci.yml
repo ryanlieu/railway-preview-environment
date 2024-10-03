@@ -62,6 +62,7 @@ jobs:
           environment_name: production
           preview_environment_name:
             preview-pr-${{ github.event.pull_request.number }}
+          api_service_name: web
           branch_name: ${{ github.head_ref }}
 
       - name: Print Output
