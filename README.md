@@ -1,5 +1,8 @@
 # Railway Preview Deploy Action
 
+<!-- prettier-ignore -->
+[![Lint Codebase](https://github.com/ayungavis/railway-preview-deploy/actions/workflows/linter.yml/badge.svg)](https://github.com/ayungavis/railway-preview-deploy/actions/workflows/linter.yml) [![CI](https://github.com/ayungavis/railway-preview-deploy/actions/workflows/ci.yml/badge.svg)](https://github.com/ayungavis/railway-preview-deploy/actions/workflows/ci.yml) [![Check dist/](https://github.com/ayungavis/railway-preview-deploy/actions/workflows/check-dist.yml/badge.svg)](https://github.com/ayungavis/railway-preview-deploy/actions/workflows/check-dist.yml) [![CodeQL](https://github.com/ayungavis/railway-preview-deploy/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/ayungavis/railway-preview-deploy/actions/workflows/codeql-analysis.yml) [![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+
 ![preview-deploy-example](assets/preview-deployment-example.png)
 
 This GitHub Action automates the deployment of a preview environment for your
