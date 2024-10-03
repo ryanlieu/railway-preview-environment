@@ -1,0 +1,3 @@
+mutation DeleteEnvironment($id: String!) {
+  environmentDelete(id: $id)
+}

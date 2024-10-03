@@ -3,9 +3,8 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "NodeNext",
-    "rootDir": "./src",
+    "rootDir": "./",
     "moduleResolution": "NodeNext",
-    "baseUrl": "./",
     "sourceMap": true,
     "outDir": "./dist",
     "noImplicitAny": true,
@@ -15,5 +14,6 @@
     "skipLibCheck": true,
     "newLine": "lf"
   },
+  "include": ["src/**/*.ts", "codegen.ts"],
   "exclude": ["./dist", "./node_modules", "./__tests__", "./coverage"]
 }
