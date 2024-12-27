@@ -43,15 +43,10 @@ export const deploy = async (): Promise<void> => {
         )
         const { serviceInstances } = selectedEnvironments[0].node
 
-        const servicesNeedRedeploy = await setServiceDomainOutput({
+        setServiceDomainOutput({
           serviceInstances,
           ignoredServices,
           apiServiceName: API_SERVICE_NAME
-        })
-
-        await redeployAllServices({
-          environmentId,
-          serviceIds: servicesNeedRedeploy
         })
         return
       } else {
