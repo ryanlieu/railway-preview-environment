@@ -53448,6 +53448,16 @@ exports.GetEnvironmentsDocument = (0, graphql_tag_1.default) `
             }
           }
         }
+        deploymentTriggers {
+          edges {
+            node {
+              id
+              environmentId
+              branch
+              projectId
+            }
+          }
+        }
       }
     }
   }
@@ -53907,7 +53917,18 @@ const deploy = async () => {
         });
         console.log('Created environment:');
         console.dir(createdEnvironment.environmentCreate, { depth: null });
-        const { id: environmentId, serviceInstances, deploymentTriggers } = createdEnvironment.environmentCreate;
+        const { id: environmentId } = createdEnvironment.environmentCreate;
+        console.log('Waiting 15 seconds for deployments to initialize and become available...');
+        await new Promise(resolve => setTimeout(resolve, 15000));
+        // Fetch the environment details after the delay to get properly initialized serviceInstances and deploymentTriggers
+        const { environments: updatedEnvironments } = await (0, get_environments_1.getEnvironments)({
+            projectId: config_1.PROJECT_ID
+        });
+        const createdEnvironmentDetails = updatedEnvironments.edges.find(edge => edge.node.id === environmentId);
+        if (!createdEnvironmentDetails) {
+            throw new Error(`Could not find created environment with ID: ${environmentId}`);
+        }
+        const { serviceInstances, deploymentTriggers } = createdEnvironmentDetails.node;
         const deploymentTriggerIds = [];
         for (const deploymentTrigger of deploymentTriggers.edges) {
             const { id: deploymentTriggerId } = deploymentTrigger.node;
@@ -53920,8 +53941,6 @@ const deploy = async () => {
             serviceInstances,
             environmentVariables: config_1.ENVIRONMENT_VARIABLES
         });
-        console.log('Waiting 15 seconds for deployments to initialize and become available...');
-        await new Promise(resolve => setTimeout(resolve, 15000));
         await (0, update_all_deployment_triggers_1.updateAllDeploymentTriggers)({
             deploymentTriggerIds,
             branchName: config_1.BRANCH_NAME

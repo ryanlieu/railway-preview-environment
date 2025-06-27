@@ -1,13 +1,13 @@
-name: 'Railway Preview Deploy Action'
+name: 'Railway Preview Environment'
 description:
-  'Railway preview deployment GitHub Actions workflow for every pull request
-  opened in your repository like a Vercel'
-author: 'Wahyu Kurniawwan <wahyu@tranity.id>'
+  'Railway preview environment GitHub Actions workflow for every pull request
+  opened in your repository'
+author: 'Ryan Lieu <ryanjlieu@gmail.com>'
 
 # Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'activity'
-  color: 'purple'
+  icon: 'truck'
+  color: 'green'
 
 # Define your inputs here.
 inputs:

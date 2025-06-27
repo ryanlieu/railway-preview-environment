@@ -1,15 +1,15 @@
 {
-  "name": "railway-preview-deploy",
-  "description": "Railway preview deployment GitHub Actions workflow for every pull request opened in your repository like a Vercel",
-  "version": "1.0.2",
-  "author": "Wahyu Kurniawan <wahyu@tranity.id>",
-  "homepage": "https://github.com/ayungavis/railway-preview-deploy",
+  "name": "railway-preview-environment",
+  "description": "Railway preview environment GitHub Actions workflow for every pull request opened in your repository",
+  "version": "1.0.3",
+  "author": "Ryan Lieu <ryanjlieu@gmail.com>",
+  "homepage": "https://github.com/ryanjlieu/railway-preview-environment",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ayungavis/railway-preview-deploy.git"
+    "url": "git+https://github.com/ryanjlieu/railway-preview-environment.git"
   },
   "bugs": {
-    "url": "https://github.com/ayungavis/railway-preview-deploy/issues"
+    "url": "https://github.com/ryanjlieu/railway-preview-environment/issues"
   },
   "keywords": [
     "railway",

@@ -26,6 +26,16 @@ query GetEnvironments($projectId: String!) {
             }
           }
         }
+        deploymentTriggers {
+          edges {
+            node {
+              id
+              environmentId
+              branch
+              projectId
+            }
+          }
+        }
       }
     }
   }

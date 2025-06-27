@@ -264,7 +264,7 @@ export type GetEnvironmentsQueryVariables = Exact<{
 }>;
 
 
-export type GetEnvironmentsQuery = { __typename?: 'Query', environments: { __typename?: 'QueryEnvironmentConnection', edges: Array<{ __typename?: 'QueryEnvironmentConnectionEdge', node: { __typename?: 'Environment', id: string, name: string, deployments: { __typename?: 'EnvironmentDeploymentsConnection', edges: Array<{ __typename?: 'EnvironmentDeploymentsEdge', node: { __typename?: 'Deployment', id: string, status: string } }> }, serviceInstances: { __typename?: 'EnvironmentServiceInstancesConnection', edges: Array<{ __typename?: 'EnvironmentServiceInstancesConnectionEdge', node: { __typename?: 'ServiceInstance', id: string, serviceId: string, domains: { __typename?: 'AllDomains', serviceDomains: Array<{ __typename?: 'ServiceDomain', domain: string, id: string }> } } }> } } }> } };
+export type GetEnvironmentsQuery = { __typename?: 'Query', environments: { __typename?: 'QueryEnvironmentConnection', edges: Array<{ __typename?: 'QueryEnvironmentConnectionEdge', node: { __typename?: 'Environment', id: string, name: string, deployments: { __typename?: 'EnvironmentDeploymentsConnection', edges: Array<{ __typename?: 'EnvironmentDeploymentsEdge', node: { __typename?: 'Deployment', id: string, status: string } }> }, serviceInstances: { __typename?: 'EnvironmentServiceInstancesConnection', edges: Array<{ __typename?: 'EnvironmentServiceInstancesConnectionEdge', node: { __typename?: 'ServiceInstance', id: string, serviceId: string, domains: { __typename?: 'AllDomains', serviceDomains: Array<{ __typename?: 'ServiceDomain', domain: string, id: string }> } } }> }, deploymentTriggers: { __typename?: 'EnvironmentDeploymentTriggersConnection', edges: Array<{ __typename?: 'EnvironmentDeploymentTriggersConnectionEdge', node: { __typename?: 'DeploymentTrigger', id: string, environmentId: string, branch: string, projectId: string } }> } } }> } };
 
 export type GetServiceQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -355,6 +355,16 @@ export const GetEnvironmentsDocument = gql`
                 }
               }
               serviceId
+            }
+          }
+        }
+        deploymentTriggers {
+          edges {
+            node {
+              id
+              environmentId
+              branch
+              projectId
             }
           }
         }

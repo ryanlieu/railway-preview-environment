@@ -218,7 +218,6 @@ your GitHub Action.
 ---
 
 <p style="font-size: 12px; color: #b3b3b3; font-style: italic;">
-This PR is inspired by
-<a href="https://github.com/Faolain/railway-pr-deploy" target="__blank">railway-pr-deploy</a> but with some
-improvements and convert it to TypeScript.
+This PR is a fork of
+<a href="https://github.com/ayungavis/railway-preview-deploy" target="__blank">railway-pr-deploy</a> that's being actively maintained
 </p>

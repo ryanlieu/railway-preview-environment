@@ -80,11 +80,29 @@ export const deploy = async (): Promise<void> => {
     console.log('Created environment:')
     console.dir(createdEnvironment.environmentCreate, { depth: null })
 
-    const {
-      id: environmentId,
-      serviceInstances,
-      deploymentTriggers
-    } = createdEnvironment.environmentCreate
+    const { id: environmentId } = createdEnvironment.environmentCreate
+
+    console.log(
+      'Waiting 15 seconds for deployments to initialize and become available...'
+    )
+    await new Promise(resolve => setTimeout(resolve, 15000))
+
+    // Fetch the environment details after the delay to get properly initialized serviceInstances and deploymentTriggers
+    const { environments: updatedEnvironments } = await getEnvironments({
+      projectId: PROJECT_ID
+    })
+    const createdEnvironmentDetails = updatedEnvironments.edges.find(
+      edge => edge.node.id === environmentId
+    )
+
+    if (!createdEnvironmentDetails) {
+      throw new Error(
+        `Could not find created environment with ID: ${environmentId}`
+      )
+    }
+
+    const { serviceInstances, deploymentTriggers } =
+      createdEnvironmentDetails.node
 
     const deploymentTriggerIds: string[] = []
     for (const deploymentTrigger of deploymentTriggers.edges) {
@@ -99,11 +117,6 @@ export const deploy = async (): Promise<void> => {
       serviceInstances,
       environmentVariables: ENVIRONMENT_VARIABLES
     })
-
-    console.log(
-      'Waiting 15 seconds for deployments to initialize and become available...'
-    )
-    await new Promise(resolve => setTimeout(resolve, 15000))
 
     await updateAllDeploymentTriggers({
       deploymentTriggerIds,
