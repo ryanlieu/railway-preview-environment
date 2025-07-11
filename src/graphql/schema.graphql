@@ -22,6 +22,7 @@ type PageInfo {
 }
 
 input EnvironmentCreateInput {
+  applyChangesInBackground: Boolean
   ephemeral: Boolean
   name: String!
   projectId: String!

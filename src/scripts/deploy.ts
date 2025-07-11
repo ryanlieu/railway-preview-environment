@@ -74,7 +74,8 @@ export const deploy = async (): Promise<void> => {
       input: {
         name: PREVIEW_ENVIRONMENT_NAME,
         projectId: PROJECT_ID,
-        sourceEnvironmentId: projectEnvironmentId
+        sourceEnvironmentId: projectEnvironmentId,
+        applyChangesInBackground: true
       }
     })
     console.log('Created environment:')

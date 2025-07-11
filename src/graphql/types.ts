@@ -72,6 +72,7 @@ export type Environment = {
 };
 
 export type EnvironmentCreateInput = {
+  applyChangesInBackground?: InputMaybe<Scalars['Boolean']['input']>;
   ephemeral?: InputMaybe<Scalars['Boolean']['input']>;
   name: Scalars['String']['input'];
   projectId: Scalars['String']['input'];
