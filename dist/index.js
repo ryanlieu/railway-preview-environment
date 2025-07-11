@@ -53912,7 +53912,8 @@ const deploy = async () => {
             input: {
                 name: config_1.PREVIEW_ENVIRONMENT_NAME,
                 projectId: config_1.PROJECT_ID,
-                sourceEnvironmentId: projectEnvironmentId
+                sourceEnvironmentId: projectEnvironmentId,
+                applyChangesInBackground: true
             }
         });
         console.log('Created environment:');
