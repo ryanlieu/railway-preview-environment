@@ -1,7 +1,7 @@
 {
   "name": "railway-preview-environment",
   "description": "Railway preview environment GitHub Actions workflow for every pull request opened in your repository",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Ryan Lieu <ryanjlieu@gmail.com>",
   "homepage": "https://github.com/ryanjlieu/railway-preview-environment",
   "repository": {
