@@ -53919,8 +53919,8 @@ const deploy = async () => {
         console.log('Created environment:');
         console.dir(createdEnvironment.environmentCreate, { depth: null });
         const { id: environmentId } = createdEnvironment.environmentCreate;
-        console.log('Waiting 15 seconds for deployments to initialize and become available...');
-        await new Promise(resolve => setTimeout(resolve, 15000));
+        console.log('Waiting 120 seconds for deployments to initialize and become available...');
+        await new Promise(resolve => setTimeout(resolve, 120000));
         // Fetch the environment details after the delay to get properly initialized serviceInstances and deploymentTriggers
         const { environments: updatedEnvironments } = await (0, get_environments_1.getEnvironments)({
             projectId: config_1.PROJECT_ID
